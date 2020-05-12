@@ -1,0 +1,9 @@
+books
+
+*.log
+*.out
+*.aux
+*.nav
+*.snm
+*.toc
+*converted-to.pdf

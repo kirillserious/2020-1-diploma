@@ -1,0 +1,156 @@
+\section{Дискретная задача}
+
+Итак, рассмотрим дискретную динамическую систему
+$$
+        x^{k+1} = \Phi^k x^k + \Gamma_1^k u^k + \Gamma_2^k u^{k-1}
+$$
+и составим для нее задачу минимизации функционала
+$$
+        J(u) = \sum\limits_{k = 1}^{N}
+        \left[
+\langle
+x^k,\,M^k x^k
+\rangle
++
+\langle
+u^k,\,N^k u^k
+\rangle
+        \right]
+        +
+        \langle
+        x^{N+1}
+        ,\,
+        T x^{N+1}
+        \rangle
+        \to \min\limits_{u},
+$$
+где $M^k = (M^k)\T \geqslant 0$, $N^k = (N^k)\T > 0$ для всех $k = \overline{1,N}$ и  $T = T\T > 0$.
+
+Сделаем замену фазовой переменной, теперь
+$$
+        z^k = \begin{pmatrix}
+x^k\\
+u^{k-1}
+        \end{pmatrix},
+$$
+Теперь предыдущее уравнение можно переписать в виде:
+$$
+        z^{k+1} = \underbrace{\begin{pmatrix}
+\Phi^k & \Gamma_2^k\\
+O & O
+        \end{pmatrix}}_{\tilde \Phi^k}
+        z^k + \underbrace{
+        \begin{pmatrix}
+\Gamma_1^k \\
+I
+        \end{pmatrix}
+        }_{\tilde\Gamma^k} u^k,
+$$
+$$
+        J = \sum\limits_{k = 1}^{N}
+        \left
+        \langle
+z^k,\,
+\underbrace{
+\begin{pmatrix}
+M^k & O \\
+O & O
+\end{pmatrix}}_{\tilde M^k}
+z^k
+        \right
+        \rangle
+        +
+        \sum\limits_{k = 1}^{N}
+        \left
+        \langle
+u^k,\,
+N^k
+u^k
+        \right
+        \rangle
+        +
+        \left
+        \langle
+z^{N+1},\,
+\underbrace{
+\begin{pmatrix}
+T & O \\
+O & O
+\end{pmatrix}}_{\tilde T}
+z^{N+1}
+        \right
+        \rangle.    
+$$
+
+\textbf{Утверждение.} \textit{Матрицы $\tilde M^k$ и $\tilde T$ явдяются положительно определенными.}
+
+Д о к а з а т е л ь с т в о. Докажем для матрицы $\tilde T$, для остальных матриц аналогично. По определению:
+$$
+        \langle z,\, \tilde T z \rangle =
+        \langle x,\, Tx \rangle + \langle u,\, Ou\rangle = 
+        \langle x,\, Tx \rangle > 0.
+$$
+ч.т.д.
+
+Рассмотрим функцию цены $V^k(z)$, она удовлетворяет уравнению Гамиль\-тона--Якоби--Беллмана, которое позволяет определить $V^k(z) рекурсивно$:
+$$
+V^k(z) = \langle z,\,\tilde M z\rangle
++
+\min\limits_{u}
+\left\{
+\langle
+u,\,N u
+\rangle
++
+V^{k+1}(\tilde\Phi z + \tilde\Gamma u)
+\right\}.
+$$
+
+Предположим, что $V^{k+1}(z) = \langle z,\, P^{k+1} z$, где $P^{k+1} = (P^{k+1})\T \geqslant 0$ и покажем, что $V^k$ будет иметь ту же форму:
+$$
+V^k(z) = \langle z,\, \tilde M z \rangle + \min\limits_{u}\left\{
+\langle u,\,N u \rangle
++
+\langle
+\tilde\Phi z + \tilde\Gamma u,\,
+P^{k+1}(\tilde\Phi z + \tilde\Gamma u)
+\rangle
+\right\},
+$$
+приравняем производную нулю
+$$
+        2u\T N + 2(\tilde\Phi z + \tilde\Gamma u)\T P^{k+1} B = 0,
+$$
+$$
+        u^* = -(N + \tilde\Gamma\T P^{k+1}\tilde\Gamma)^{-1}\tilde\Gamma\T P^{k+1} \tilde\Phi z.
+$$
+Тогда функция цены
+\begin{align*}
+V^k(z) &=
+\langle
+z,\,\tilde M z
+\rangle
++
+\langle
+u^*,\,Nu^*
+\rangle
++
+\langle
+\tilde\Phi z + \tilde\Gamma u^*
+,\,P^{k+1}(\tilde\Phi z + \tilde\Gamma u^*) =\\
+&=
+\langle
+z,\,
+[\tilde M
++
+\tilde\Phi\T P^{k+1} \tilde\Phi
+-
+\tilde\Phi\T P^{k+1} \tilde\Gamma (N + \tilde\Gamma\T P^{k+1} \tilde\Gamma)^{-1} \tilde\Gamma\T P^{k+1} \tilde\Phi
+]z\rangle = \\
+&=
+\langle z,\, P^k z \rangle.
+\end{align*}
+Видно, что $P^k = (P^k)\T > 0$.
+$$
+P^{N+1} = T.
+$$

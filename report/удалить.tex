@@ -1,0 +1,456 @@
+       \begin{frame}{Непрерывная линейно-квадратичная задача}
+                Рассмотрим задачу
+                $
+                        \dot x = A(t)x+B(t)u,
+                $
+                $
+                        J(u)
+                =
+                        \int_{t_0}^{t_1}
+                [
+                \langle
+                x,\,M(s)x
+                \rangle
+                +
+                \langle
+                u,\,N(s)u
+                \rangle
+                ]\,ds
+                        +
+                        \langle
+                        x(t_1),\,Tx(t_1)
+                        \rangle
+                \to
+                        \min\limits_{u},
+                $
+где $M(s) = M^{\mathrm{T}}(s) \geqslant 0$,
+$N(s) = N^{\mathrm{T}}(s) > 0$,
+$T = T^{\mathrm{T}} > 0$.
+                \vspace{1cm}
+
+                Введём функцию цены
+                $
+                        V(t_0, x_0) = \inf_{u}{J(u)}
+                $ и будем искать её в виде $V(t,x) = \langle x, P(t) x\rangle$, где $P(t) = P^{\mathrm{T}}(t) > 0.$
+
+                \vspace{1cm}
+
+                Функция цены удолетворяет уравнению Гамильтона--Якоби--Беллмана:
+                \begin{equation*}
+\begin{cases}
+        \frac{\partial V}{\partial t}
+        +
+        \min\limits_{u}
+        \left\{
+        
+\left\langle
+\frac{\partial V}{\partial x}
+,\,
+Ax + Bu
+\right\rangle
++
+\langle
+x,\,Mx
+\rangle
++
+\langle
+u,\,Nu
+\rangle
+        
+        \right\}
+        =
+        0,
+\\
+        V(t_1,\,x)
+        =
+        \langle x,\,Tx \rangle.
+\end{cases}
+\end{equation*}
+        \end{frame}
+        \begin{frame}{Непрерывная линейно-квадратичная задача}
+                Решив уравнение Гамильтона--Якоби--Беллмана, получим
+                \begin{equation*}
+                        u^*[t] = -N^{-1}(t)B^{\mathrm{T}}(t) P(t)x[t],
+                \end{equation*}
+                где $P(t)$ удовлетворяет уравнению Риккати:
+                \begin{equation*}
+                        \begin{cases}
+                                \dot P + PA + A^{\mathrm{T}} P - PBN^{-1}B^{\mathrm{T}} P + M = 0,\\
+                                P(t_1) = T,
+                        \end{cases}
+                \end{equation*}
+                а $x[t]$ --- текущее состояние объекта, которое можно вычислить таким образом:
+                \begin{equation*}
+                        x[t] =
+                        \begin{cases}
+                                X(t,t_0)x_0 + \int\limits_{t_0}^{t}X(t,s)B(s)u^*[s]\,ds,
+                                &
+                                t \in [t_0,t_0 + h],
+                                \\
+                                X(t,t - h)x[t-h] + \int\limits_{t - h}^{t}X(t,s)B(s)u^*[s]\,ds,
+                                &
+                                t \in (t_0 + h,t_1].
+                        \end{cases}
+                \end{equation*}
+        \end{frame}
+        \begin{frame}{Алгоритм}
+        \end{frame}
+        \begin{frame}{Пример}
+                Рассмотрим модель электродвигателя постоянного тока:
+                \begin{adjustbox}{max totalsize={0.9\textwidth}{.2\textheight}, center}
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+\centering
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Resistor [id:dp759021563450837] 
+\draw   (101.18,90) -- (176.49,90) -- (176.49,130) -- (101.18,130) -- (101.18,90) -- cycle (80,110) -- (101.18,110) (176.49,110) -- (197.67,110) ;
+%Straight Lines [id:da9833480980865364] 
+\draw    (80,110) -- (40,110) ;
+%Straight Lines [id:da7530411059484647] 
+\draw    (40,110) -- (40,140) ;
+\draw [shift={(40,140)}, rotate = 90] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+%Straight Lines [id:da4394842288276831] 
+\draw    (197.67,110) -- (247.67,110) ;
+%Shape: Inductor (Air Core) [id:dp1789049029135794] 
+\draw   (247.67,110) -- (267.89,110) .. controls (268.18,99.49) and (270.98,90.51) .. (274.96,87.37) .. controls (278.93,84.23) and (283.26,87.57) .. (285.86,95.79) .. controls (287.87,102.2) and (288.69,110.48) .. (288.11,118.53) .. controls (288.11,121.67) and (287.1,124.21) .. (285.86,124.21) .. controls (284.62,124.21) and (283.61,121.67) .. (283.61,118.53) .. controls (283.03,110.48) and (283.85,102.2) .. (285.86,95.79) .. controls (288.19,88.96) and (291.45,85.09) .. (294.85,85.09) .. controls (298.25,85.09) and (301.5,88.96) .. (303.83,95.79) .. controls (305.84,102.2) and (306.66,110.48) .. (306.08,118.53) .. controls (306.08,121.67) and (305.07,124.21) .. (303.83,124.21) .. controls (302.59,124.21) and (301.59,121.67) .. (301.59,118.53) .. controls (301.01,110.48) and (301.83,102.2) .. (303.83,95.79) .. controls (306.17,88.96) and (309.42,85.09) .. (312.82,85.09) .. controls (316.22,85.09) and (319.47,88.96) .. (321.81,95.79) .. controls (323.81,102.2) and (324.63,110.48) .. (324.05,118.53) .. controls (324.05,121.67) and (323.05,124.21) .. (321.81,124.21) .. controls (320.57,124.21) and (319.56,121.67) .. (319.56,118.53) .. controls (318.98,110.48) and (319.8,102.2) .. (321.81,95.79) .. controls (324.41,87.57) and (328.74,84.23) .. (332.71,87.37) .. controls (336.68,90.51) and (339.49,99.49) .. (339.78,110) -- (360,110) ;
+%Straight Lines [id:da7540700655846257] 
+\draw    (360,110) -- (410,110) ;
+%Straight Lines [id:da7535572793540471] 
+\draw    (410,110) -- (410,140) ;
+%Shape: Output [id:dp058288178798897916] 
+\draw   (410,160) .. controls (421.05,160) and (430,168.95) .. (430,180) .. controls (430,191.05) and (421.05,200) .. (410,200) .. controls (398.95,200) and (390,191.05) .. (390,180) .. controls (390,168.95) and (398.95,160) .. (410,160) -- cycle (410,140) -- (410,160) (410,220) -- (410,200) ;
+%Straight Lines [id:da6255843491047207] 
+\draw    (410,220) -- (410,250) ;
+%Straight Lines [id:da6133494645345363] 
+\draw    (40,250) -- (410,250) ;
+%Straight Lines [id:da9318737388527801] 
+\draw    (40,220) -- (40,250) ;
+\draw [shift={(40,220)}, rotate = 90] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+%Curve Lines [id:da4185870543351564] 
+\draw    (180,170) .. controls (239.37,82.44) and (297.75,258.89) .. (181.76,200.89) ;
+\draw [shift={(180,200)}, rotate = 387.14] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da13172357267529422] 
+\draw    (410,180) -- (510,220) ;
+%Curve Lines [id:da7742183141810091] 
+\draw    (470,180) .. controls (490.03,193.79) and (488.39,225.04) .. (451.7,220.24) ;
+\draw [shift={(450,220)}, rotate = 368.9] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+% Text Node
+\draw (131,62.4) node [anchor=north west][inner sep=0.75pt]    {$R$};
+% Text Node
+\draw (297,61.4) node [anchor=north west][inner sep=0.75pt]    {$L$};
+% Text Node
+\draw (46,132.4) node [anchor=north west][inner sep=0.75pt]    {$+$};
+% Text Node
+\draw (47,202.4) node [anchor=north west][inner sep=0.75pt]    {$-$};
+% Text Node
+\draw (31,172.4) node [anchor=north west][inner sep=0.75pt]    {$u( t)$};
+% Text Node
+\draw (261,172.4) node [anchor=north west][inner sep=0.75pt]    {$i( t)$};
+% Text Node
+\draw (481,172.4) node [anchor=north west][inner sep=0.75pt]    {$w( t)$};
+\end{tikzpicture}
+\end{adjstbox}
+$$
+\left\{
+\begin{aligned}
+\frac {di}{dt}
+&=
+-\frac{R}{L}i
+-
+\frac{K_b}{L}\omega
++
+\frac{1}{L}u(t),\\
+\frac{d\omega}{dt}
+&=
+-\frac{K_T}{J}i
+-
+\frac{B}{J}\omega.
+\end{aligned}
+\right.
+\;\Longrightarrow\;
+        \frac{dx}{dt}
+        =
+        \begin{pmatrix}
+-2 & -0,\!02 \\
+-1 & -10
+        \end{pmatrix}
+        x
+        +
+        \begin{pmatrix}
+2 \\
+0
+        \end{pmatrix}
+        u.
+$$
+Сравним управление без запаздывания и с запаздыванием $h = 0,\!5$ на отрезке $[1,\,3]$ для параметров
+$$
+        M = \begin{pmatrix}
+1 & 0 \\
+0 & 10
+        \end{pmatrix},
+        \quad
+        N = (1),
+        \quad
+        T = \begin{pmatrix}
+1 & 0 \\
+0 & 1
+        \end{pmatrix},
+        \quad
+        x(1) = \begin{pmatrix}
+4 \\
+100
+        \end{pmatrix}.
+$$
+        \end{frame}
+        \begin{frame}{Пример}
+                \begin{figure}[t]        
+                        \hfill
+                        \includegraphics[width=0.49\textwidth]{content/example/simple-control.eps}
+                        \hfill
+                        \includegraphics[width=0.49\textwidth]{content/example/small-control.eps}
+                        \hfill
+                        Слева: без запаздывания, $J = 4970,\!8$.\\
+                        Справа: с запаздыванием, $J_{\varepsilon} = 4971$, $\varepsilon = 0,\!01$.
+                \end{figure}
+        \end{frame}
+
+        \begin{frame}{Система с интервалом между наблюдениями}
+                $$
+                        \varepsilon = \mathrm{const}
+                $$
+                \begin{figure}[t]
+                        \hfill
+                        \includegraphics[width=0.49\textwidth]{content/reduction/01.eps}
+                        \hfill
+                        \includegraphics[width=0.49\textwidth]{content/reduction/square.eps}
+                        \hfill
+                        Слева: результат работы программы при $\varepsilon = 0,\!1$.\\
+                        Справа: среднеквадратичное функционала качества $(J - J_{\varepsilon})^2$.
+                \end{figure}
+        \end{frame}
+        \begin{frame}{Задержка меньше интервала между наблюдениями}
+                Редукция к дискретной системе:
+                \begin{multline*}
+x^{k+1} = X(t^{k+1},t^k)x^k
++
+\int_{t^k}^{t^{k} + h} X(t^{k+1} - h,s)B(s)\,ds\cdot u^{k-1}
++\\+
+\int_{t^{k} + h}^{t^{k+1}} X(t^{k+1},s)B(s)\,ds\cdot u^{k}.
+\end{multline*}
+\begin{equation*}
+        x^{k+1} = \Phi^k x^k + \Gamma_1^k u^{k} + \Gamma_2^k u^{k-1}.
+\end{equation*}
+                \begin{adjustbox}{max totalsize={0.9\textwidth}{.4\textheight}, center}
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+\centering
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da35985306918083526] 
+\draw    (100,110) -- (598,110) ;
+\draw [shift={(600,110)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da32106765450262065] 
+\draw    (100,50) -- (100,108) ;
+\draw [shift={(100,110)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da8214392914683835] 
+\draw    (230,50) -- (230,108) ;
+\draw [shift={(230,110)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da004791921615067252] 
+\draw    (360,50) -- (360,108) ;
+\draw [shift={(360,110)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da5712030850361053] 
+\draw    (233,70) -- (357,70) ;
+\draw [shift={(360,70)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+\draw [shift={(230,70)}, rotate = 0] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da9707227447008594] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (100,109) -- (100,230) ;
+%Straight Lines [id:da12490692567020634] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (130,110) -- (130,230) ;
+%Straight Lines [id:da24651362568684776] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (230,110) -- (230,230) ;
+%Straight Lines [id:da3268721449826282] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (260,110) -- (260,230) ;
+%Straight Lines [id:da8460646135972608] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (360,110) -- (360,230) ;
+%Straight Lines [id:da050181155508509545] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (390,110) -- (390,230) ;
+%Straight Lines [id:da40778935140992556] 
+\draw    (101,210) -- (129,210) ;
+\draw [shift={(128,210)}, rotate = 0] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+\draw [shift={(102,210)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da25231316824794214] 
+\draw    (231,210) -- (259,210) ;
+\draw [shift={(258,210)}, rotate = 0] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+\draw [shift={(232,210)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da7485299203870347] 
+\draw    (361,210) -- (389,210) ;
+\draw [shift={(388,210)}, rotate = 0] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+\draw [shift={(362,210)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da6433056942372144] 
+\draw    (130,138.5) .. controls (131.67,136.83) and (133.33,136.83) .. (135,138.5) .. controls (136.67,140.17) and (138.33,140.17) .. (140,138.5) .. controls (141.67,136.83) and (143.33,136.83) .. (145,138.5) .. controls (146.67,140.17) and (148.33,140.17) .. (150,138.5) .. controls (151.67,136.83) and (153.33,136.83) .. (155,138.5) .. controls (156.67,140.17) and (158.33,140.17) .. (160,138.5) .. controls (161.67,136.83) and (163.33,136.83) .. (165,138.5) .. controls (166.67,140.17) and (168.33,140.17) .. (170,138.5) .. controls (171.67,136.83) and (173.33,136.83) .. (175,138.5) .. controls (176.67,140.17) and (178.33,140.17) .. (180,138.5) .. controls (181.67,136.83) and (183.33,136.83) .. (185,138.5) .. controls (186.67,140.17) and (188.33,140.17) .. (190,138.5) .. controls (191.67,136.83) and (193.33,136.83) .. (195,138.5) .. controls (196.67,140.17) and (198.33,140.17) .. (200,138.5) .. controls (201.67,136.83) and (203.33,136.83) .. (205,138.5) .. controls (206.67,140.17) and (208.33,140.17) .. (210,138.5) .. controls (211.67,136.83) and (213.33,136.83) .. (215,138.5) .. controls (216.67,140.17) and (218.33,140.17) .. (220,138.5) .. controls (221.67,136.83) and (223.33,136.83) .. (225,138.5) .. controls (226.67,140.17) and (228.33,140.17) .. (230,138.5) .. controls (231.67,136.83) and (233.33,136.83) .. (235,138.5) .. controls (236.67,140.17) and (238.33,140.17) .. (240,138.5) .. controls (241.67,136.83) and (243.33,136.83) .. (245,138.5) .. controls (246.67,140.17) and (248.33,140.17) .. (250,138.5) .. controls (251.67,136.83) and (253.33,136.83) .. (255,138.5) .. controls (256.67,140.17) and (258.33,140.17) .. (260,138.5) -- (260,138.5)(130,141.5) .. controls (131.67,139.83) and (133.33,139.83) .. (135,141.5) .. controls (136.67,143.17) and (138.33,143.17) .. (140,141.5) .. controls (141.67,139.83) and (143.33,139.83) .. (145,141.5) .. controls (146.67,143.17) and (148.33,143.17) .. (150,141.5) .. controls (151.67,139.83) and (153.33,139.83) .. (155,141.5) .. controls (156.67,143.17) and (158.33,143.17) .. (160,141.5) .. controls (161.67,139.83) and (163.33,139.83) .. (165,141.5) .. controls (166.67,143.17) and (168.33,143.17) .. (170,141.5) .. controls (171.67,139.83) and (173.33,139.83) .. (175,141.5) .. controls (176.67,143.17) and (178.33,143.17) .. (180,141.5) .. controls (181.67,139.83) and (183.33,139.83) .. (185,141.5) .. controls (186.67,143.17) and (188.33,143.17) .. (190,141.5) .. controls (191.67,139.83) and (193.33,139.83) .. (195,141.5) .. controls (196.67,143.17) and (198.33,143.17) .. (200,141.5) .. controls (201.67,139.83) and (203.33,139.83) .. (205,141.5) .. controls (206.67,143.17) and (208.33,143.17) .. (210,141.5) .. controls (211.67,139.83) and (213.33,139.83) .. (215,141.5) .. controls (216.67,143.17) and (218.33,143.17) .. (220,141.5) .. controls (221.67,139.83) and (223.33,139.83) .. (225,141.5) .. controls (226.67,143.17) and (228.33,143.17) .. (230,141.5) .. controls (231.67,139.83) and (233.33,139.83) .. (235,141.5) .. controls (236.67,143.17) and (238.33,143.17) .. (240,141.5) .. controls (241.67,139.83) and (243.33,139.83) .. (245,141.5) .. controls (246.67,143.17) and (248.33,143.17) .. (250,141.5) .. controls (251.67,139.83) and (253.33,139.83) .. (255,141.5) .. controls (256.67,143.17) and (258.33,143.17) .. (260,141.5) -- (260,141.5) ;
+%Straight Lines [id:da43614197953958656] 
+\draw    (100,158.5) .. controls (101.67,156.83) and (103.33,156.83) .. (105,158.5) .. controls (106.67,160.17) and (108.33,160.17) .. (110,158.5) .. controls (111.67,156.83) and (113.33,156.83) .. (115,158.5) .. controls (116.67,160.17) and (118.33,160.17) .. (120,158.5) .. controls (121.67,156.83) and (123.33,156.83) .. (125,158.5) .. controls (126.67,160.17) and (128.33,160.17) .. (130,158.5) -- (130,158.5)(100,161.5) .. controls (101.67,159.83) and (103.33,159.83) .. (105,161.5) .. controls (106.67,163.17) and (108.33,163.17) .. (110,161.5) .. controls (111.67,159.83) and (113.33,159.83) .. (115,161.5) .. controls (116.67,163.17) and (118.33,163.17) .. (120,161.5) .. controls (121.67,159.83) and (123.33,159.83) .. (125,161.5) .. controls (126.67,163.17) and (128.33,163.17) .. (130,161.5) -- (130,161.5) ;
+%Straight Lines [id:da5166290012929178] 
+\draw    (260,158.5) .. controls (261.67,156.83) and (263.33,156.83) .. (265,158.5) .. controls (266.67,160.17) and (268.33,160.17) .. (270,158.5) .. controls (271.67,156.83) and (273.33,156.83) .. (275,158.5) .. controls (276.67,160.17) and (278.33,160.17) .. (280,158.5) .. controls (281.67,156.83) and (283.33,156.83) .. (285,158.5) .. controls (286.67,160.17) and (288.33,160.17) .. (290,158.5) .. controls (291.67,156.83) and (293.33,156.83) .. (295,158.5) .. controls (296.67,160.17) and (298.33,160.17) .. (300,158.5) .. controls (301.67,156.83) and (303.33,156.83) .. (305,158.5) .. controls (306.67,160.17) and (308.33,160.17) .. (310,158.5) .. controls (311.67,156.83) and (313.33,156.83) .. (315,158.5) .. controls (316.67,160.17) and (318.33,160.17) .. (320,158.5) .. controls (321.67,156.83) and (323.33,156.83) .. (325,158.5) .. controls (326.67,160.17) and (328.33,160.17) .. (330,158.5) .. controls (331.67,156.83) and (333.33,156.83) .. (335,158.5) .. controls (336.67,160.17) and (338.33,160.17) .. (340,158.5) .. controls (341.67,156.83) and (343.33,156.83) .. (345,158.5) .. controls (346.67,160.17) and (348.33,160.17) .. (350,158.5) .. controls (351.67,156.83) and (353.33,156.83) .. (355,158.5) .. controls (356.67,160.17) and (358.33,160.17) .. (360,158.5) .. controls (361.67,156.83) and (363.33,156.83) .. (365,158.5) .. controls (366.67,160.17) and (368.33,160.17) .. (370,158.5) .. controls (371.67,156.83) and (373.33,156.83) .. (375,158.5) .. controls (376.67,160.17) and (378.33,160.17) .. (380,158.5) .. controls (381.67,156.83) and (383.33,156.83) .. (385,158.5) .. controls (386.67,160.17) and (388.33,160.17) .. (390,158.5) -- (390,158.5)(260,161.5) .. controls (261.67,159.83) and (263.33,159.83) .. (265,161.5) .. controls (266.67,163.17) and (268.33,163.17) .. (270,161.5) .. controls (271.67,159.83) and (273.33,159.83) .. (275,161.5) .. controls (276.67,163.17) and (278.33,163.17) .. (280,161.5) .. controls (281.67,159.83) and (283.33,159.83) .. (285,161.5) .. controls (286.67,163.17) and (288.33,163.17) .. (290,161.5) .. controls (291.67,159.83) and (293.33,159.83) .. (295,161.5) .. controls (296.67,163.17) and (298.33,163.17) .. (300,161.5) .. controls (301.67,159.83) and (303.33,159.83) .. (305,161.5) .. controls (306.67,163.17) and (308.33,163.17) .. (310,161.5) .. controls (311.67,159.83) and (313.33,159.83) .. (315,161.5) .. controls (316.67,163.17) and (318.33,163.17) .. (320,161.5) .. controls (321.67,159.83) and (323.33,159.83) .. (325,161.5) .. controls (326.67,163.17) and (328.33,163.17) .. (330,161.5) .. controls (331.67,159.83) and (333.33,159.83) .. (335,161.5) .. controls (336.67,163.17) and (338.33,163.17) .. (340,161.5) .. controls (341.67,159.83) and (343.33,159.83) .. (345,161.5) .. controls (346.67,163.17) and (348.33,163.17) .. (350,161.5) .. controls (351.67,159.83) and (353.33,159.83) .. (355,161.5) .. controls (356.67,163.17) and (358.33,163.17) .. (360,161.5) .. controls (361.67,159.83) and (363.33,159.83) .. (365,161.5) .. controls (366.67,163.17) and (368.33,163.17) .. (370,161.5) .. controls (371.67,159.83) and (373.33,159.83) .. (375,161.5) .. controls (376.67,163.17) and (378.33,163.17) .. (380,161.5) .. controls (381.67,159.83) and (383.33,159.83) .. (385,161.5) .. controls (386.67,163.17) and (388.33,163.17) .. (390,161.5) -- (390,161.5) ;
+%Straight Lines [id:da7310536979710727] 
+\draw    (490,50) -- (490,108) ;
+\draw [shift={(490,110)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da12502452123196184] 
+\draw    (363,70) -- (487,70) ;
+\draw [shift={(490,70)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+\draw [shift={(360,70)}, rotate = 0] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da567384646470296] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (490,110) -- (490,230) ;
+%Straight Lines [id:da9393775253321939] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (520,110) -- (520,230) ;
+%Straight Lines [id:da5549100836347505] 
+\draw    (491,210) -- (519,210) ;
+\draw [shift={(518,210)}, rotate = 0] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+\draw [shift={(492,210)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da3553751948082903] 
+\draw    (390,138.5) .. controls (391.67,136.83) and (393.33,136.83) .. (395,138.5) .. controls (396.67,140.17) and (398.33,140.17) .. (400,138.5) .. controls (401.67,136.83) and (403.33,136.83) .. (405,138.5) .. controls (406.67,140.17) and (408.33,140.17) .. (410,138.5) .. controls (411.67,136.83) and (413.33,136.83) .. (415,138.5) .. controls (416.67,140.17) and (418.33,140.17) .. (420,138.5) .. controls (421.67,136.83) and (423.33,136.83) .. (425,138.5) .. controls (426.67,140.17) and (428.33,140.17) .. (430,138.5) .. controls (431.67,136.83) and (433.33,136.83) .. (435,138.5) .. controls (436.67,140.17) and (438.33,140.17) .. (440,138.5) .. controls (441.67,136.83) and (443.33,136.83) .. (445,138.5) .. controls (446.67,140.17) and (448.33,140.17) .. (450,138.5) .. controls (451.67,136.83) and (453.33,136.83) .. (455,138.5) .. controls (456.67,140.17) and (458.33,140.17) .. (460,138.5) .. controls (461.67,136.83) and (463.33,136.83) .. (465,138.5) .. controls (466.67,140.17) and (468.33,140.17) .. (470,138.5) .. controls (471.67,136.83) and (473.33,136.83) .. (475,138.5) .. controls (476.67,140.17) and (478.33,140.17) .. (480,138.5) .. controls (481.67,136.83) and (483.33,136.83) .. (485,138.5) .. controls (486.67,140.17) and (488.33,140.17) .. (490,138.5) .. controls (491.67,136.83) and (493.33,136.83) .. (495,138.5) .. controls (496.67,140.17) and (498.33,140.17) .. (500,138.5) .. controls (501.67,136.83) and (503.33,136.83) .. (505,138.5) .. controls (506.67,140.17) and (508.33,140.17) .. (510,138.5) .. controls (511.67,136.83) and (513.33,136.83) .. (515,138.5) .. controls (516.67,140.17) and (518.33,140.17) .. (520,138.5) -- (520,138.5)(390,141.5) .. controls (391.67,139.83) and (393.33,139.83) .. (395,141.5) .. controls (396.67,143.17) and (398.33,143.17) .. (400,141.5) .. controls (401.67,139.83) and (403.33,139.83) .. (405,141.5) .. controls (406.67,143.17) and (408.33,143.17) .. (410,141.5) .. controls (411.67,139.83) and (413.33,139.83) .. (415,141.5) .. controls (416.67,143.17) and (418.33,143.17) .. (420,141.5) .. controls (421.67,139.83) and (423.33,139.83) .. (425,141.5) .. controls (426.67,143.17) and (428.33,143.17) .. (430,141.5) .. controls (431.67,139.83) and (433.33,139.83) .. (435,141.5) .. controls (436.67,143.17) and (438.33,143.17) .. (440,141.5) .. controls (441.67,139.83) and (443.33,139.83) .. (445,141.5) .. controls (446.67,143.17) and (448.33,143.17) .. (450,141.5) .. controls (451.67,139.83) and (453.33,139.83) .. (455,141.5) .. controls (456.67,143.17) and (458.33,143.17) .. (460,141.5) .. controls (461.67,139.83) and (463.33,139.83) .. (465,141.5) .. controls (466.67,143.17) and (468.33,143.17) .. (470,141.5) .. controls (471.67,139.83) and (473.33,139.83) .. (475,141.5) .. controls (476.67,143.17) and (478.33,143.17) .. (480,141.5) .. controls (481.67,139.83) and (483.33,139.83) .. (485,141.5) .. controls (486.67,143.17) and (488.33,143.17) .. (490,141.5) .. controls (491.67,139.83) and (493.33,139.83) .. (495,141.5) .. controls (496.67,143.17) and (498.33,143.17) .. (500,141.5) .. controls (501.67,139.83) and (503.33,139.83) .. (505,141.5) .. controls (506.67,143.17) and (508.33,143.17) .. (510,141.5) .. controls (511.67,139.83) and (513.33,139.83) .. (515,141.5) .. controls (516.67,143.17) and (518.33,143.17) .. (520,141.5) -- (520,141.5) ;
+%Straight Lines [id:da76267213163528] 
+\draw    (103,70) -- (227,70) ;
+\draw [shift={(230,70)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+\draw [shift={(100,70)}, rotate = 0] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (91,26) node [anchor=north west][inner sep=0.75pt]    {$x^{1}$};
+% Text Node
+\draw (221,26) node [anchor=north west][inner sep=0.75pt]    {$x^{2}$};
+% Text Node
+\draw (351,26) node [anchor=north west][inner sep=0.75pt]    {$x^{3}$};
+% Text Node
+\draw (161,52.4) node [anchor=north west][inner sep=0.75pt]    {$\varepsilon $};
+% Text Node
+\draw (291,52.4) node [anchor=north west][inner sep=0.75pt]    {$\varepsilon $};
+% Text Node
+\draw (109.5,212.9) node [anchor=north west][inner sep=0.75pt]    {$h$};
+% Text Node
+\draw (240,211.9) node [anchor=north west][inner sep=0.75pt]    {$h$};
+% Text Node
+\draw (369.5,211.9) node [anchor=north west][inner sep=0.75pt]    {$h$};
+% Text Node
+\draw (481,26) node [anchor=north west][inner sep=0.75pt]    {$x^{4}$};
+% Text Node
+\draw (421,52.4) node [anchor=north west][inner sep=0.75pt]    {$\varepsilon $};
+% Text Node
+\draw (500,211.9) node [anchor=north west][inner sep=0.75pt]    {$h$};
+% Text Node
+\draw (106,135) node [anchor=north west][inner sep=0.75pt]    {$u^{0}$};
+% Text Node
+\draw (190,115) node [anchor=north west][inner sep=0.75pt]    {$u^{1}$};
+% Text Node
+\draw (320,135) node [anchor=north west][inner sep=0.75pt]    {$u^{2}$};
+% Text Node
+\draw (450,115) node [anchor=north west][inner sep=0.75pt]    {$u^{3}$};
+% Text Node
+\draw (551,52.4) node [anchor=north west][inner sep=0.75pt]    {$\dotsc $};
+% Text Node
+\draw (551,142.4) node [anchor=north west][inner sep=0.75pt]    {$\dotsc $};
+% Text Node
+\draw (607,102.4) node [anchor=north west][inner sep=0.75pt]    {$t$};
+% Text Node
+\draw (80,99.4) node [anchor=north west][inner sep=0.75pt]    {$t_{1}$};
+\end{tikzpicture}
+\end{adjstbox}
+        \end{frame}
+
+        \begin{frame}{Задержка меньше интервала между наблюдениями}
+                Приводим к системе без запаздывания:
+$$
+        z^k = \begin{pmatrix} x^k\\u^{k-1} \end{pmatrix}
+        \;\Longrightarrow\;
+        z^{k+1} = \underbrace{\begin{pmatrix}
+\Phi^k & \Gamma_2^k\\
+O & O
+        \end{pmatrix}}_{\tilde \Phi^k}
+        z^k + \underbrace{
+        \begin{pmatrix}
+\Gamma_1^k \\
+I
+        \end{pmatrix}
+        }_{\tilde\Gamma^k} u^k.
+$$
+                Тогда функция цены $V^k(z)$ удовлетворяет дискретному уравнению Гамильтона--Якоби--Беллмана:
+                $$
+V^k(z) = \langle z,\,\tilde M z\rangle
++
+\min\limits_{u}
+\left\{
+\langle
+u,\,N u
+\rangle
++
+V^{k+1}(\tilde\Phi z + \tilde\Gamma u)
+\right\}.
+                $$
+                Будем искать функцию цены в виде $V^k(z) = \langle z,\,P^k z \rangle$, где $P^k = (P^k)^{\mathrm{T}} > 0$ и получим управление.
+        \end{frame}
+
+        \begin{frame}{Задержка меньше интервала между наблюдениями}
+$$
+        u^{k*} = -(N^k + (\tilde\Gamma^k)^{\mathrm{T}} P^{k}\tilde\Gamma^k)^{-1}(\tilde\Gamma^k)^{\mathrm{T}} P^{k} \tilde\Phi^k z^k,
+$$
+        где $P^k$ вычисляется как
+$$
+        P^{k-1} = \tilde M^k + (\tilde\Phi^k)^{\mathrm{T}}P^k\tilde\Phi^k - (\tilde\Phi^k)^{\mathrm{T}}P^k\tilde\Gamma^k[N + (\tilde\Gamma^k)^{\mathrm{T}}P^k\tilde\Gamma^k]^{-1}(\tilde\Gamma^k)^{\mathrm{T}}P^k\tilde\Phi^k,
+$$
+$$
+        P^{N+1} = \tilde T.
+$$
+        \end{frame}
+        \begin{frame}{Дискретный пример}
+Для модели электродвигателя:
+$$
+        \Phi = e^{A\varepsilon} \approx \begin{pmatrix}
+\;\;\,0,\!6705 & -0,\!0013 \\
+-0,\!0669 & \;\;\,0,\!1354
+        \end{pmatrix},
+$$
+$$
+        \Gamma_1 = \int\limits_{h}^{\varepsilon}
+        e^{As}\,ds \cdot B \approx
+\begin{pmatrix}
+\;\;\,0,\!2345 \\
+-0,\!0175
+\end{pmatrix}, \quad
+        \Gamma_2 = \int\limits_{0}^{h}
+        e^{As}\,ds \cdot B \approx
+        \begin{pmatrix}
+\;\;\,0,\!0952 \\
+-0,\!0021
+        \end{pmatrix}.
+$$
+\begin{figure}
+        \includegraphics[width=0.6\textwidth]{content/discrete-example/cont-and-disc.eps}
+\end{figure}
+        \end{frame}
+        \begin{frame}{Дискретный пример}
+                \begin{figure}[t]
+                        \hfill
+                        \includegraphics[width=0.49\textwidth]{content/discrete-example/discr_control.eps}
+                        \hfill
+                        \includegraphics[width=0.49\textwidth]{content/discrete-example/control.eps}
+                        \hfill
+                        Слева: результат работы программы при $\varepsilon = 0,\!1$.\\
+                        Справа: среднеквадратичное функционала качества $(J - J_{\varepsilon})^2$.
+                \end{figure}
+        \end{frame}
+        \begin{frame}{Планы дальнейшей работы}
+                \begin{itemize}
+                        \item
+Исследовать систему с неопределенностью
+$$
+        \dot x = A(t) x + B(t) u + \xi.
+$$
+\textit{Построение быстрого алгоритма для фильтра Калмана.}
+                        \item
+Исследовать систему со случайной задежкой?
+\textit{Задержка может быть случайной величиной или случайным процессом.}
+                        \item
+Исследовать другие типы задач.
+                \end{itemize}
+                \end{frame}

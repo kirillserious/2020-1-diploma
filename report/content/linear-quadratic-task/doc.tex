@@ -1,0 +1,222 @@
+\section{Непрерывная линейно-квадратичная задача}
+
+Рассмотрим линейную динамическую систему с непрерывными ограниченными коэффициентами
+\begin{equation}\label{eq:first_task}
+        \frac{d}{dt}x(t) = A(t)x(t) + B(t)u(t)
+\end{equation}
+и поставим для него задачу минимизации следующего квадратичного функционала
+\begin{equation}\label{eq:functional}
+        J(u)
+=
+        \int\limits_{t_0}^{t_1}
+[
+\langle
+x,\,M(s)x
+\rangle
++
+\langle
+u,\,N(s)u
+\rangle
+]\,ds
+        +
+        \langle
+        x(t_1),\,Tx(t_1)
+        \rangle
+\to
+        \min\limits_{u},
+\end{equation}
+где $M(s) = M\T(s) \geqslant 0$,
+$N(s) = N\T(s) > 0$,
+$T > 0$.
+
+Обозначим за $\hat x(t,\,x^0,\,t_0)$ решение системы \eqref{eq:first_task} с заданным начальным условием $x(t_0) = x^0$ и введём в рассмотрение функцию цены
+\begin{multline*}
+        V(t,\,x)
+=
+\inf\limits_u \left\{
+        \int\limits_{t}^{t_1}
+[
+\langle
+\hat x(s,\,t,\,x),\,M(s)\hat x(s,\,t,\,x)
+\rangle
++
+\langle
+u(s),\,N(s)u(s)
+\rangle
+]\,ds
+        \;+\right.\\+\left.
+        \langle
+        \hat x(t_1,\,t,\,x),\,T\hat x(t_1,\,t,\,x)
+        \rangle
+\right\}.
+\end{multline*}
+При этом $V(t_0,\,x^0) = \inf\limits_u J(u)$. Тогда согласно \cite{krasovsky} такая функция цены удовлетворяет уравнению Гамильтона--Якоби--Беллмана:
+\begin{equation}\label{eq:g-ya-b}
+\begin{cases}
+        \frac{\partial V}{\partial t}
+        +
+        \min\limits_{u}
+        \left\{
+        \underbrace{
+\left\langle
+\frac{\partial V}{\partial x}
+,\,
+Ax + Bu
+\right\rangle
++
+\langle
+x,\,Mx
+\rangle
++
+\langle
+u,\,Nu
+\rangle
+        }\limits_{\Psi}
+        \right\}
+        =
+        0,
+\\
+        V(t_1,\,x)
+        =
+        \langle x,\,Tx \rangle.
+\end{cases}
+\end{equation}
+Как следствие получаем, что управление $u^* = \arg\min\limits_u \Psi$, если такое существует, будет оптимальным.
+
+Так как получившаяся функция $\Psi$ строго выпукла по переменной $u$, то минимум будет достигнут в единственной точке. Запишем необходимое условие экстремума:
+\begin{align*}
+\mathrm{grad}_u \Psi(u^*) &= 0,\\
+B\T\frac{\partial V}{\partial x} + 2Nu^* &=0. 
+\end{align*}
+Получается, что оптимальное управление может быть задано как
+\begin{equation}
+        u^* = -\frac{1}{2}N^{-1}B\T\frac{\partial V}{\partial x}.
+\end{equation}
+
+Вернёмся к уравнению \eqref{eq:g-ya-b}, подставив в него получившийся результат:
+$$
+        \frac{\partial V}{\partial t}
+        +
+        \left\langle
+        \frac{\partial V}{\partial x},\,Ax
+        \right\rangle
+        -
+        \frac{1}{4}
+        \left\langle
+        \frac{\partial V}{\partial x},\,
+        BN^{-1}B\T\frac{\partial V}{\partial x}
+        \right\rangle
+        +
+        \langle
+        x,\,Mx
+        \rangle
+        = 0.
+$$
+Будем искать функцию цены как квадратичную форму
+$
+        V(t,\,x)
+        =
+        \langle x,\,P(t)x\rangle,
+$
+где
+$
+        P(t) = P\T(t) > 0.
+$
+Тогда
+\begin{align*}
+\left\langle
+x,\,\frac{dP}{dt} x
+\right\rangle
++
+2\langle
+Px,\,Ax
+\rangle
+-
+\langle
+Px,\,BN^{-1}B\T P x
+\rangle
++
+\langle
+x,\,Mx
+\rangle
+&= 0,
+\\
+\left\langle
+x,\,\frac{dP}{dt} x
+\right\rangle
++
+\langle
+x,\,PAx
+\rangle
++
+\langle
+A\T P x,\,x
+\rangle
+-
+\langle
+Px,\,BN^{-1}B\T P x
+\rangle
++
+\langle
+x,\,Mx
+\rangle
+&= 0,
+\\
+\left\langle
+x,\,\frac{dP}{dt} x
+\right\rangle
++
+\langle
+x,\,PAx
+\rangle
++
+\langle
+x,\,A\T P x
+\rangle
+-
+\langle
+x,\,PBN^{-1}B\T P x
+\rangle
++
+\langle
+x,\,Mx
+\rangle
+&= 0.
+\end{align*}
+Так как в правой части скалярных произведений стоят симметричные матрицы, мы можем записать следующее матричное дифференциальное уравнение, которому должна удовлетворять матрица $P$:
+\begin{equation}\label{eq:rikkati}
+\begin{cases}
+\frac{dP}{dt} + PA + A\T P - PBN^{-1}B\T P + M = 0,\\
+P(t_1) = T.
+\end{cases}
+\end{equation}
+Уравнение \eqref{eq:rikkati} называют \textit{уравнением Риккати}. Подробно о свойствах решений уравнения Риккати можно прочитать в работе \cite{egorov}. Нам достаточно того, что для симметричных матриц данное уравнение имеет единственное решение на рассматриваемом интервале $t_0\leqslant t\leqslant t_1$.
+
+Теперь вспомним, что информация о состоянии системы в текущий момент времени недоступна наблюдению. Воспользуемся формулой Коши:
+$$
+x(t) = X(t,\,t-h)\xi + \int\limits_{t-h}^{t}X(t,\,s)B(s)u(s)\,ds,
+$$
+где $\xi$ --- состояние системы в момент времени $t- h$, а $X(t, s)$ --- матрица Коши, определяющаяся следующими соотношениями:
+$$
+        \begin{cases}
+\frac{\partial}{\partial t}X(t,\,s) = A(t)X(t,\,s),\\
+X(s,\,s) = I.
+        \end{cases}
+$$
+
+Таким образом, мы можем записать оптимальную стратегию
+\begin{equation} \label{eq:opt_control}
+u^*[t] = -N^{-1}(t)B\T(t) P(t)x[t],
+\end{equation}
+где матрица $P(t)$ является решением системы \eqref{eq:rikkati}, а 
+\begin{equation*}
+x[t] =
+\begin{cases}
+x_0,&\mbox{при }t = t_0\\
+X(t,\,t_0)x_0 + \int\limits_{t_0}^{t}X(t,\,s)B(s)u^*[s]\,ds,
+&\mbox{при }t_0 < t < t_0 + h,\\
+X(t,\,t - h)x[t-h] + \int\limits_{t - h}^{t}X(t,\,s)B(s)u^*[s]\,ds,
+&\mbox{при } t_0 + h < t \leqslant t_1.
+\end{cases}
+\end{equation*}
+Отметим также, что с точки зрения поставленной задачи интегрирование управления до момента $t$ нам доступно, так как центр может хранить информацию о посланном ранее управлении.
