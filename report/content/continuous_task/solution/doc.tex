@@ -1,63 +1,9 @@
-\section{Непрерывная передача наблюдений}
-\subsection{Формализация задачи}
-
-Рассмотрим линейную динамическую систему с непрерывными ограниченными коэффициентами
-\begin{equation}\label{eq:first_task}
-        \frac{d}{dt}x(t) = A(t)x(t) + B(t)u(t),
-        \quad
-        t_0 \leqslant t \leqslant t_1
-\end{equation}
-с заданным начальным условием
-\begin{equation}\label{eq:start_condition}
-        x(t_0) = x^0.
-\end{equation}
-\begin{remark}
-        Под решением задачи Коши~\eqref{eq:first_task}--\eqref{eq:start_condition} мы будем называть \textit{решение Каратеодори}, то есть измеримую функцию $x(t)$, удовлетворяющую также интегральному уравнению
-$$
-        x(t) = x^0 + \int\limits_{t_0}^{t} [A(\tau)x(\tau) + B(\tau)u(\tau)]\,d\tau,
-        \quad
-        t_0\leqslant t \leqslant t_1,
-$$ 
-        где интеграл понимается в смысле Лебега.
-\end{remark}
-
-Для задачи Коши~\eqref{eq:first_task}--\eqref{eq:start_condition} поставим задачу поиска измеримого управления, минимизируещего следующий интегрально-квадратичный функционал
-\begin{equation}\label{eq:functional}
-        J(u)
-=
-        \int\limits_{t_0}^{t_1}
-[
-\langle
-x,\,M(s)x
-\rangle
-+
-\langle
-u,\,N(s)u
-\rangle
-]\,ds
-        +
-        \langle
-        x(t_1),\,Tx(t_1)
-        \rangle
-\to
-        \min\limits_{u \in U},
-\end{equation}
-где $M(s) = M\T(s) \geqslant 0$,
-$N(s) = N\T(s) > 0$,
-$T > 0$,
-а $U$ --- множество измеримых функций на отрезке $t_0 \leqslant t \leqslant t_1$.
-
-\begin{remark}
-        Допустимый класс управления выбран таким образом, чтобы выполнялись достаточные условия существования и единственности решения задачи Коши~\eqref{eq:first_task}--\eqref{eq:start_condition} на промежутке $t_0 \leqslant t \leqslant t_1$ \cite{filippov}.
-\end{remark}
-
-
 \subsection{Решение задачи}
 Обозначим за $\hat x(t,\,x^0,\,t_0)$ решение системы \eqref{eq:first_task} с заданным начальным условием $x(t_0) = x^0$ и введём в рассмотрение функцию цены
 \begin{multline*}
         V(t,\,x)
 =
-\inf\limits_{u \in U} \left\{
+\inf\limits_{u \in U[t,\,t_1]} \left\{
         \int\limits_{t}^{t_1}
 [
 \langle

@@ -1,4 +1,4 @@
-\section{Пример работы программы}
+\subsection{Пример работы программы}
 
 Рассмотрим в качестве примера работы программы модель управления скоростью электродвигателя постоянного тока. Данная модель была предложена и исследована на управляемость в \cite{baghdad}. Мы сравним полученные в работе~\cite{baghdad} управления без запаздывания с построенными нами.
 
@@ -80,7 +80,7 @@
 \caption{Схема электрической цепи электродвигателя постоянного тока.}
 \end{figure}
 
-Ниже приведем таблицу с описанием констант в системе \eqref{eq:example} и их характерными значениями для электродвигателя:
+Ниже приведем таблицу с описанием констант в системе \eqref{eq:example} и их характерными значениями для электродвигателя постоянного тока:
 
 \begin{center}
 \begin{tabular}{|c|l|c|}
@@ -180,14 +180,14 @@ $$
 $$
 \begin{figure}[bh]
         \noindent\centering{
-        \includegraphics[width=160mm]{content/example/simple-control.eps}
+        \includegraphics[width=160mm]{content/continuous_task/example/simple-control.eps}
         }
         \caption{Оптимальная стратегия без запаздывания наблюдения для системы~\eqref{eq:x-example}. Значение функционала $J = 4970,\!8$.}
         \label{img:simple-control}
 \end{figure}
 \begin{figure}[bh]
         \noindent\centering{
-        \includegraphics[width=160mm]{content/example/simple-tr.eps}
+        \includegraphics[width=160mm]{content/continuous_task/example/simple-tr.eps}
         }
         \caption{Поведение системы \eqref{eq:x-example} при использовании оптимальной стратегии без запаздывания наблюдения.}
         \label{img:simple-tr}
@@ -201,21 +201,21 @@ $$
 
 \begin{figure}[bh]
         \noindent\centering{
-        \includegraphics[width=160mm]{content/example/small-control.eps}
+        \includegraphics[width=160mm]{content/continuous_task/example/small-control.eps}
         }
         \caption{Оптимальная стратегия с запаздыванием наблюдения $h = 0,\!5$ для системы~\eqref{eq:x-example} с разбиением $\varepsilon = 0,\!01$. Значение функционала $J = 4971$.}
         \label{img:small-control}
 \end{figure}
 \begin{figure}[bh]
         \noindent\centering{
-        \includegraphics[width=160mm]{content/example/small-tr.eps}
+        \includegraphics[width=160mm]{content/continuous_task/example/small-tr.eps}
         }
         \caption{Поведение системы \eqref{eq:x-example} при использовании оптимальной стратегии c запаздыванием наблюдения (Рис.~\ref{img:small-control}).}
         \label{img:small-tr}
 \end{figure}
 \begin{figure}[bh]
         \noindent\centering{
-        \includegraphics[width=160mm]{content/example/cpu.eps}
+        \includegraphics[width=160mm]{content/continuous_task/example/cpu.eps}
         }
         \caption{Время работы программы в зависимости от величины задержки $h$ для изначального и оптимизированного алгоритмов.}
         \label{img:cpu}
