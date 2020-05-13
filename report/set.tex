@@ -7,4 +7,48 @@
 \usepackage{amsmath}  % Математические 
 \usepackage{amssymb}  % формулы
 
-\usepackage{tikz}
+\usepackage{tikz}  % Векторная графика
+
+
+\usepackage{amsthm}  % Красивый внешний вид теорем, определений и доказательств
+\newtheoremstyle{def}
+        {\topsep}
+        {\topsep}
+        {\normalfont}
+        {\parindent}
+        {\bfseries}
+        {.}
+        {.5em}
+        {}
+\theoremstyle{def}
+\newtheorem{definition}{Определение}[section]
+\newtheorem{example}{Пример}[section]
+
+\newtheoremstyle{th}
+        {\topsep}
+        {\topsep}
+        {\itshape}
+        {\parindent}
+        {\bfseries}
+        {.}
+        {.5em}
+        {}
+\theoremstyle{th}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem{assertion}{Утверждение}[section]
+
+\newtheoremstyle{rem}
+        {0.5\topsep}
+        {0.5\topsep}
+        {\normalfont}
+        {\parindent}
+        {\itshape}
+        {.}
+        {.5em}
+        {}
+\theoremstyle{rem}
+\newtheorem{remark}{Замечание}
+
+% Новое доказательство
+\renewenvironment{proof}{\parД о к а з а т е л ь с т в о.}{\hfill$\blacksquare$}
