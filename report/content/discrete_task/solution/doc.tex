@@ -1,0 +1,182 @@
+\subsection{Решение задачи}
+
+Прежде всего сделаем замену фазовой переменной, чтобы избавиться от запаздывания по управлению в системе \eqref{eq:main-discr}:
+$$
+        z^k = \begin{pmatrix}
+x^k\\
+u^{k-1}
+        \end{pmatrix}.
+$$
+Тогда условие задачи \eqref{eq:main-discr}--\eqref{eq:main-discr-1} можно переписать в следующем виде:
+\begin{equation}\label{eq:simple-disc}
+        z^{k+1} = \underbrace{\begin{pmatrix}
+\Phi^k & \Gamma_2^k\\
+O & O
+        \end{pmatrix}}_{\tilde \Phi^k}
+        z^k + \underbrace{
+        \begin{pmatrix}
+\Gamma_1^k \\
+I
+        \end{pmatrix}
+        }_{\tilde\Gamma^k} u^k,
+\end{equation}
+\begin{equation}\label{eq:simple-disc-1}
+        J(u) = \sum\limits_{k = 1}^{N}
+        \left
+        \langle
+z^k,\,
+\underbrace{
+\begin{pmatrix}
+M^k & O \\
+O & O
+\end{pmatrix}}_{\tilde M^k}
+z^k
+        \right
+        \rangle
+        +
+        \sum\limits_{k = 1}^{N}
+        \left
+        \langle
+u^k,\,
+N^k
+u^k
+        \right
+        \rangle
+        +
+        \left
+        \langle
+z^{N+1},\,
+\underbrace{
+\begin{pmatrix}
+T & O \\
+O & O
+\end{pmatrix}}_{\tilde T}
+z^{N+1}
+        \right
+        \rangle.    
+\end{equation}
+
+\begin{assertion}
+        В формуле \eqref{eq:simple-disc-1} матрицы $\tilde M^k \geqslant 0$, $\tilde T > 0$.
+\end{assertion}
+
+\begin{proof}
+Докажем для матрицы $\tilde T$, для остальных матриц аналогично. По определению
+$$
+        \langle z,\, \tilde T z \rangle =
+        \langle x,\, Tx \rangle + \langle u,\, Ou\rangle = 
+        \langle x,\, Tx \rangle > 0.
+$$
+\end{proof}
+
+Будем действовать так же, как и в случае с непрерывной системой. Введём функцию цены 
+$$
+V^l(z) = \min\limits_u\left\{
+        \sum\limits_{k = l}^{N}
+        \left
+        \langle
+z^k,\,
+{\tilde M^k}
+z^k
+        \right
+        \rangle
+        +
+        \sum\limits_{k = l}^{N}
+        \left
+        \langle
+u^k,\,
+N^k
+u^k
+        \right
+        \rangle
+        +
+        \left
+        \langle
+z^{N+1},\,
+{\tilde T}
+z^{N+1}
+        \right
+        \rangle
+\right\},
+\;
+z^l = z.
+$$
+Причём $V^1(z^1) = \min\limits_u J(u)$. Такая функция цены удовлетворяет дискретному уравнению Гамильтона--Якоби--Беллмана, которое позволяет определить $V^k(z)$ рекурсивно
+\begin{equation}\label{eq:gyb-discr}
+V^{k-1}(z) = \langle z,\,\tilde M^k z\rangle
++
+\min\limits_{u^k}
+\left\{
+\langle
+u^k,\,N^k u^k
+\rangle
++
+V^{k}(\tilde\Phi^k z + \tilde\Gamma^k u^k)
+\right\},
+\end{equation}
+с краевым начальным условием
+\begin{equation}\label{eq:gyb-discr-1}
+        V^{N+1}(z)
+        =
+        \langle z,\,\tilde T z\rangle.
+\end{equation}
+
+Предположим, что функция цены задаётся квадратичной формой $V^{k}(z) = \langle z,\, P^{k} z\rangle$, где $P^{k} = (P^{k})\T > 0$ и покажем, что $V^{k-1}(z)$ будет иметь ту же форму. Из \eqref{eq:gyb-discr} получаем:
+$$
+V^{k-1}(z) = \langle z,\, \tilde M^k z \rangle + \min\limits_{u^k}\left\{\underbrace{
+\langle u^k,\,N^k u^k \rangle
++
+\langle
+\tilde\Phi^k z + \tilde\Gamma u^k,\,
+P^{k}(\tilde\Phi^k z + \tilde\Gamma^k u^k)
+\rangle}_{\Psi(z,\,u^k)}
+\right\}.
+$$
+Воспользуемся необходимым условием минимума, приравняв производную 
+$\Psi'_{u^k}(u^*,\,z)$ к нулю:
+$$
+        2 N^k u^{k*} + 2(\tilde\Gamma^k)\T P^k\tilde\Phi^k z + 2(\tilde\Gamma^k)\T P^k \tilde \Gamma ^ku^{k*} = 0,
+$$
+\begin{equation}\label{eq:opt-discr}
+        u^{k*} = -[N^k + (\tilde\Gamma^k)\T P^{k}\tilde\Gamma^k]^{-1}(\tilde\Gamma^k)\T P^{k} \tilde\Phi^k z.
+\end{equation}
+Тогда функция цены
+\begin{align*}
+V^{k-1}(z) &=
+\langle
+z,\,\tilde M^k z
+\rangle
++
+\langle
+u^*,\,N^ku^*
+\rangle
++
+\langle
+\tilde\Phi^k z + \tilde\Gamma^k u^*
+,\,P^{k}(\tilde\Phi^k z + \tilde\Gamma^k u^*) =\\
+&=
+\langle
+z,\,
+[\tilde M^k
++
+(\tilde\Phi^k)\T P^k \tilde\Phi^k
+-\\&\qquad\qquad\;\;-
+(\tilde\Phi^k)\T P^k \tilde\Gamma^k (N^k + (\tilde\Gamma^k)\T P^k \tilde\Gamma^k)^{-1} (\tilde\Gamma^k)\T P^k \tilde\Phi^k
+]z\rangle = \\
+&=
+\langle z,\, P^{k-1} z \rangle,
+\end{align*}
+причем, очевидно, что $P^k = (P^k)\T > 0$.
+
+Подведём итог: оптимальную стратегию можно найти используя формулу~\eqref{eq:opt-discr}, где матрица $P^k$ должна удовлетворять следующим соотношениям:
+\begin{equation}\label{eq:disc-rikkati}
+        \left\{
+        \begin{aligned}
+P^{k-1} &= \tilde M^k
++
+(\tilde\Phi^k)\T P^k \tilde\Phi^k-
+(\tilde\Phi^k)\T P^k \tilde\Gamma^k (N^k + (\tilde\Gamma^k)\T P^k \tilde\Gamma^k)^{-1} (\tilde\Gamma^k)\T P^k \tilde\Phi^k,\\
+P^{N+1} &= \tilde T.
+        \end{aligned}
+        \right.
+\end{equation}

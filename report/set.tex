@@ -1,4 +1,5 @@
 % Необходимые пакеты для компиляции русского языка, картинок и прочего
+
 \usepackage[utf8]{inputenc}                % Кодировка
 \usepackage[main=russian, english]{babel}  % Русский язык
 \usepackage[pdftex]{graphicx}              % Картинки
@@ -9,6 +10,16 @@
 
 \usepackage{tikz}  % Векторная графика
 
+\usepackage[unicode]{hyperref}                           % Ссылки и русские закладки
+\hypersetup {                                            %
+    pdftitle={Выпускная квалификационная работа},        % Название документа
+    pdfsubject={О задаче целевого управления             % Тема документа
+по результатам наблюдений, поступающих с запаздыванием}, %
+    pdfauthor={Егоров Кирилл Юлианович},                 % Автор документа
+    pdfcreator={Кафедра системного анализа ВМК МГУ},     % Создатель документа
+    pdfproducer={LaTeX},                                 % Программа, создавшая документ
+    hidelinks                                            % Скрывает рамку вокруг ссылок
+}
 
 \usepackage{amsthm}  % Красивый внешний вид теорем, определений и доказательств
 \newtheoremstyle{def}
@@ -21,8 +32,8 @@
         {.5em}
         {}
 \theoremstyle{def}
-\newtheorem{definition}{Определение}[section]
-\newtheorem{example}{Пример}[section]
+\newtheorem{definition}{Определение}
+\newtheorem{example}{Пример}
 
 \newtheoremstyle{th}
         {\topsep}
@@ -34,9 +45,9 @@
         {.5em}
         {}
 \theoremstyle{th}
-\newtheorem{theorem}{Теорема}[section]
-\newtheorem{lemma}{Лемма}[section]
-\newtheorem{assertion}{Утверждение}[section]
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}{Лемма}
+\newtheorem{assertion}{Утверждение}
 
 \newtheoremstyle{rem}
         {0.5\topsep}

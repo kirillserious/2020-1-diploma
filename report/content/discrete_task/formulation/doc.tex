@@ -1,0 +1,60 @@
+\subsection{Формализация задачи}
+
+Реальные системы не могут передавать данные о своём положении непрерывно.
+В данном разделе мы будем считать, что данные о состоянии передаются с некоторым известным детерминированным интервалом времени $\varepsilon$.
+
+В таком случае кажутся естественным провести редукцию системы \eqref{eq:first_task} к дискретному виду.
+Обозначим за $\{t^k\,:\,t^{k+1} > t^k\}_{k=1}^N$ времена поступления наблюдений, а за $x^k = x(t^k)$ --- соответсвующие состояния системы \eqref{eq:first_task}.
+Будем строить кусочно-постоянное управление вида
+$$
+        u(t) \equiv u^{k},
+        \quad
+        t^{k} + h \leqslant t \leqslant t^{k+1} + h.
+$$
+
+\begin{figure}[h]
+        \centering
+        \input{content/discrete_task/formulation/schema_01}
+        \caption{Иллюстрация перехода к дискретной системе. Здесь показано в какие моменты времени наблюдается состояние системы и на каких промежутках действуют постоянные управления.}
+\end{figure}
+
+Применим на промежутке $t^k \leqslant t \leqslant t^{k+1}$ формулу Коши:
+\begin{multline*}
+x^{k+1} = X(t^{k+1},\,t^k)x^k
++
+\int\limits_{t^k}^{t^{k} + \hat h} X(t^{k} + \hat h,\,s)B(s)\,ds\cdot u^{k-m-1}
++\\+
+\int\limits_{t^{k} +\hat h}^{t^{k+1}} X(t^{k+1},\,s)B(s)\,ds\cdot u^{k-m},
+\end{multline*}
+где $m = \left\lfloor\frac{h}{\varepsilon}\right\rfloor$, $\hat h = h - m\varepsilon$.
+Таким образом, мы получили дискретную систему с запаздыванием по управлению
+\begin{equation}\label{eq:first-discr}
+        x^{k+1} = \Phi^k x_k + \Gamma_1^k u^{k-m} + \Gamma_2^k u^{k-m-1}.
+\end{equation}
+
+Упростим систему \eqref{eq:first-discr}. На момент времени $t^k$ помимо состояния системы $x^{k}$ нам известны все переданные на тот момент управления $u^0,\,\ldots,\,u^{k-1}$. Это значит, что мы можем рассчитать $x^{k+m}$, последовательно $m$ раз применив формулу \eqref{eq:first-discr} к состоянию $x^k$. Таким образом, не ограничивая общности, можем считать, что величина запаздывания $h$ строго меньше интервала между наблюдениями $\varepsilon$, и система преобразуется к виду
+\begin{equation}\label{eq:main-discr}
+        x^{k+1} = \Phi^kx^k + \Gamma_1^ku^k + \Gamma_2^ku^{k-1}.
+\end{equation}
+
+Для системы \eqref{eq:main-discr} поставим задачу минимизации квадратичного функционала
+\begin{equation}\label{eq:main-discr-1}
+        J(u) = \sum\limits_{k = 1}^{N}
+        \left[
+\langle
+x^k,\,M^k x^k
+\rangle
++
+\langle
+u^k,\,N^k u^k
+\rangle
+        \right]
+        +
+        \langle
+        x^{N+1}
+        ,\,
+        T x^{N+1}
+        \rangle
+        \to \min\limits_{u},
+\end{equation}
+где $M^k = (M^k)\T \geqslant 0$, $N^k = (N^k)\T > 0$, $k = \overline{1,N}$ и  $T = T\T > 0$.
