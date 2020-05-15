@@ -1,4 +1,4 @@
-\section{Постановка задачи}
+\section{Общая постановка задачи}
 
 Рассмотрим управляемый объект, положение которого задаётся динамической системой дифференциальных уравнений
 \begin{equation}\label{eq:base_system}
@@ -22,53 +22,19 @@ $$
         f(t,\,x(t),\,v(t - h_{\mathrm{fc}},\, x(t - h_{\mathrm{tc}} - h_{\mathrm{fc}}))).
 $$
 
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        
 \begin{figure}[h]
-\centering
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
-
-%Shape: Rectangle [id:dp49899220246604004] 
-\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (70,180) -- (140,180) -- (140,230) -- (70,230) -- cycle ;
-%Shape: Rectangle [id:dp5036156977339801] 
-\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (70,240) -- (140,240) -- (140,250) -- (70,250) -- cycle ;
-%Shape: Circle [id:dp8783058595446472] 
-\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (310,55) .. controls (310,46.72) and (316.72,40) .. (325,40) .. controls (333.28,40) and (340,46.72) .. (340,55) .. controls (340,63.28) and (333.28,70) .. (325,70) .. controls (316.72,70) and (310,63.28) .. (310,55) -- cycle ;
-%Curve Lines [id:da2875956857096633] 
-\draw    (319.6,56) .. controls (359.2,26.3) and (370.77,108.72) .. (426.5,96.4) ;
-\draw [shift={(428.2,96)}, rotate = 525.87] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-%Curve Lines [id:da4933081009052841] 
-\draw  [dash pattern={on 4.5pt off 4.5pt}]  (293,48) .. controls (215.39,34.47) and (126.69,56.58) .. (123.84,164.37) ;
-\draw [shift={(123.8,166)}, rotate = 271.05] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-%Curve Lines [id:da11306010539930555] 
-\draw  [dash pattern={on 4.5pt off 4.5pt}]  (156.6,191.2) .. controls (265.5,190.8) and (311.67,136.7) .. (314.91,79.73) ;
-\draw [shift={(315,78)}, rotate = 452.39] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-
-% Text Node
-\draw (430.8,88.4) node [anchor=north west][inner sep=0.75pt]    {$\frac{dx}{dt} = f( t,\, x,\, v)$};
-% Text Node
-\draw (88.8,44.4) node [anchor=north west][inner sep=0.75pt]    {$x( t-h_{\mathrm tc})$};
-% Text Node
-\draw (360, 4) node [anchor=north west][inner sep=0.75pt]   [align=left] {Управляемый объект};
-% Text Node
-\draw (150, 210) node [anchor=north west][inner sep=0.75pt]   [align=left] {Центр управления};
-% Text Node
-\draw (292.8,152.4) node [anchor=north west][inner sep=0.75pt]    {$v( t-h_{\mathrm fc})$};
-% Text Node
-\draw (150,230) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {\textit{{\small Получает данные о состоянии}}};
-% Text Node
-\draw (360, 24) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {{\small \textit{Получает управление }}\\};
-% Text Node
-\draw (360, 38) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {{\small \textit{из центра с запаздыванием}}};
-% Text Node
-\draw (150, 244) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {\textit{{\small объекта с запаздыванием}}};
-\end{tikzpicture}
-\caption{Иллюстрация поставленной задачи.}\label{img:formulation}
+        \centering
+        \vspace{1cm}
+        \input{content/formulation/schema}
+        \caption{Иллюстрация поставленной задачи.}
+        \label{img:formulation}
+        \vspace{1cm}
 \end{figure}
 
 Обозначим за $h$ общую величину задержки $h = h_{\mathrm{tc}} + h_{\mathrm{fc}}$, а за $u$ такое управление, что $u(t) = v(t-h_{\mathrm{fc}})$ для всех $t \in [t_0,\,t_1]$.
 Тогда мы можем сформулировать общую постановку задачи следующим образом: необходимо найти оптимальное управление $u$ в форме стратегии $u = u(t,\, x(t-h))$ для следующей динамической системы
-\begin{equation}
+\begin{equation}\label{eq:end-form}
         \frac{d}{dt}x(t) = f(t,\,x(t),\,u(t)), \quad t_0\leqslant t\leqslant t_1
 \end{equation}
 с начальным условием
@@ -76,5 +42,6 @@ $$
         x(t_0) = x^0.
 $$
 
+Для системы \eqref{eq:end-form} мы поставим задачу минимизации интегрально-квадра\-тич\-ного функционала. Такая постановка предполагает различные формализации в случаях, если данные передаются непрерывно или дискретно через некоторые интервалы времени. В следующих разделах мы отдельно рассмотрим каждую из постановок. В обоих случаях будем предполагать, что система линейна, то есть $f(t,\,x,\,u) = A(t)x + B(t)u.$
 
 
