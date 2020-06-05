@@ -8,7 +8,21 @@
         {студент 4 курса К. Ю. Егоров\\
         научный руководитель --- к.ф-м.н., доцент И. В. Востриков}
 \institute{Кафедра системного анализа}
-\date{7 мая 2020 г.}
+\date{10 июня 2020 г.}
+
+% Добавляем в панель навигации номер страницы
+\setbeamertemplate{navigation symbols}{
+        \insertslidenavigationsymbol
+        \insertframenavigationsymbol
+        \insertsubsectionnavigationsymbol
+        \insertsectionnavigationsymbol
+        \insertdocnavigationsymbol
+        \insertbackfindforwardnavigationsymbol
+        \hspace{1em}
+        \usebeamerfont{footline}
+        \insertframenumber /\inserttotalframenumber
+        %
+}
 
 \begin{document}
         \maketitle
@@ -223,17 +237,16 @@ u,\,Nu
         \begin{frame}{Решение дискретной задачи}
                 Оптимальная стратегия:
                 $$
-                        \boxed{
                                 u^{k*} = -(N^k + (\tilde\Gamma^k)^{\mathrm{T}} P^{k}\tilde\Gamma^k)^{-1}(\tilde\Gamma^k)^{\mathrm{T}} P^{k} \tilde\Phi^k z^k,
-                        }
                 $$
+                где $P^k$ удовлетворяет реккурентным соотношениям:
                 \begin{multline*}
                         P^{k-1} = \tilde M^k + (\tilde\Phi^k)^{\mathrm{T}}P^k\tilde\Phi^k
                         -\\- (\tilde\Phi^k)^{\mathrm{T}}P^k\tilde\Gamma^k[N
                         + (\tilde\Gamma^k)^{\mathrm{T}}P^k\tilde\Gamma^k]^{-1}(\tilde\Gamma^k)^{\mathrm{T}}P^k\tilde\Phi^k, \\
                 \end{multline*}
                 $
-                        P^{N+1} = \tilde T.
+                        \quad P^{N+1} = \tilde T.
                 $
         \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
