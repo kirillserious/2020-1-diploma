@@ -220,15 +220,15 @@ u,\,Nu
                 \end{equation*}
                 Тогда функция цены $V^k(z)$ удовлетворяет дискретному уравнению Гамильтона--Якоби--Беллмана:
                 \begin{equation*}
-                        V^k(z) = \langle z,\,\tilde M z\rangle
+                        V^{k-1}(z) = \langle z,\,\tilde M^k z\rangle
                         +
                         \min\limits_{u}
                         \left\{
                         \langle
-                        u,\,N u
+                        u,\,N^k u
                         \rangle
                         +
-                        V^{k+1}(\tilde\Phi z + \tilde\Gamma u)
+                        V^k(\tilde\Phi^k z + \tilde\Gamma^k u)
                         \right\}.
                 \end{equation*}
                 Будем искать функцию цены в виде $V^k(z) = \langle z,\,P^k z \rangle$, где $P^k = (P^k)^{\mathrm{T}} > 0$ и получим управление.
@@ -242,7 +242,7 @@ u,\,Nu
                 где $P^k$ удовлетворяет реккурентным соотношениям:
                 \begin{multline*}
                         P^{k-1} = \tilde M^k + (\tilde\Phi^k)^{\mathrm{T}}P^k\tilde\Phi^k
-                        -\\- (\tilde\Phi^k)^{\mathrm{T}}P^k\tilde\Gamma^k[N
+                        -\\- (\tilde\Phi^k)^{\mathrm{T}}P^k\tilde\Gamma^k[N^k
                         + (\tilde\Gamma^k)^{\mathrm{T}}P^k\tilde\Gamma^k]^{-1}(\tilde\Gamma^k)^{\mathrm{T}}P^k\tilde\Phi^k, \\
                 \end{multline*}
                 $
